@@ -1,0 +1,36 @@
+<?php
+
+// php insert data to mysql database using PDO
+if(isset($_POST['insert']))
+{
+ try {
+ // connect to mysql
+ $pdoConnect = new PDO("mysql:host=localhost;dbname=care","root","");
+ } catch (PDOException $exc) {
+ echo $exc->getMessage();
+ exit();
+ }
+ // get values form input text
+ $Name = $_POST['i1'];
+ $Email = $_POST['i2'];
+ $Phone = $_POST['i3'];
+  $Date = $_POST['i4'];
+ $Doctor = $_POST['i5'];
+ $Message = $_POST['i6'];
+  
+ 
+
+
+ // mysql query to insert data
+ $pdoQuery = "INSERT INTO `appointment`(`Name`, `Email`, `Phone`,`Date`,`Doctor`,`Message`) VALUES (:i1,:i2,:i3,:i4,:i5,:i6,)";
+ $pdoResult = $pdoConnect->prepare($pdoQuery);
+ $pdoExec = $pdoResult->execute(array(":i1"=>$Name,":i2"=>$Email,":i3"=>$Phone,":i4"=>$Date,":i5"=>$Doctor,":i6"=>$Message));
+ 
+ // check if mysql insert query successful
+ if($pdoExec)
+ {
+ echo 'STUDENT SUCCESSFULLY ENROLLED';
+ }else{
+ echo 'STUDENT ENROLLED FAILED';
+ } }
+?>
